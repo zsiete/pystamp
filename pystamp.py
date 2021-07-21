@@ -1,4 +1,4 @@
-# !/usr/bin/python
+#!/usr/bin/env python
 
 import argparse
 import PyPDF2
@@ -11,11 +11,14 @@ def get_cmdline_args():
                         help='The main PDF to receive the stamp')
     parser.add_argument('watermark_file_path', metavar='watermark',
                         help='A single-page PDF with the watermark or logo to be stamped onto the main PDF')
-    parser.add_argument('output_path', metavar='output',
-                        help='File to write the result')
+    parser.add_argument('-o', '--output', dest='output_path', metavar='output',
+                        help='File to write the result, if not provided the default is output.pdf')
 
-    return parser.parse_args()
+    args = parser.parse_args()
+    if not args.output_path:
+        args.output_path = 'output.pdf'
 
+    return args
 
 if __name__ == '__main__':
     args = get_cmdline_args()
